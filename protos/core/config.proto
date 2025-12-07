@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package xray.core;
+option go_package = "github.com/xtls/xray-core/core";
+
+import "common/serial/typed_message.proto";
+
+message InboundHandlerConfig {
+  string tag = 1;
+  xray.common.serial.TypedMessage receiver_settings = 2;
+  xray.common.serial.TypedMessage proxy_settings = 3;
+}
+
+message OutboundHandlerConfig {
+  string tag = 1;
+  xray.common.serial.TypedMessage sender_settings = 2;
+  xray.common.serial.TypedMessage proxy_settings = 3;
+}
+

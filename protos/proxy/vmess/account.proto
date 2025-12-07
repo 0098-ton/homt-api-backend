@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package xray.proxy.vmess;
+option go_package = "github.com/xtls/xray-core/proxy/vmess";
+
+message Account {
+  string id = 1;
+  uint32 alter_id = 2;
+  uint32 security_settings = 3;
+  repeated string test_enabled_cipher = 4;
+}

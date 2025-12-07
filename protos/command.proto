@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package xray.app.proxyman.command;
+option go_package = "github.com/xtls/xray-core/app/proxyman/command";
+
+import "common.proto";
+import "protocol.proto";
+
+message AddUserOperation {
+  xray.common.protocol.User user = 1;
+}
+
+message RemoveUserOperation {
+  string email = 1;
+}
+
+message AlterInboundRequest {
+  string tag = 1;
+  oneof operation {
+    AddUserOperation add_user = 2;
+    RemoveUserOperation remove_user = 3;
+  }
+}
+
+message AlterInboundResponse {}
+
+message AddInboundRequest {
+  xray.core.InboundHandlerConfig inbound = 1;
+}
+
+message AddInboundResponse {}
+
+message RemoveInboundRequest {
+  string tag = 1;
+}
+
+message RemoveInboundResponse {}
+
+service HandlerService {
+  rpc AddInbound(AddInboundRequest) returns (AddInboundResponse) {}
+  rpc RemoveInbound(RemoveInboundRequest) returns (RemoveInboundResponse) {}
+  rpc AlterInbound(AlterInboundRequest) returns (AlterInboundResponse) {}
+}
+

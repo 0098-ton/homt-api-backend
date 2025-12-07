@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    image: homt-vpn-api
+    container_name: vpn-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGODB_URI=mongodb://root:chikano9743@mongo:27017/
+      - JWT_SECRET=${JWT_SECRET}
+      - API_KEY=${API_KEY}
+      - LOG_LEVEL=info
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - homt-vpn-network
+    command: npm start
+
+  scheduler:
+    image: homt-vpn-api
+    container_name: vpn-scheduler
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://root:chikano9743@mongo:27017/
+      - LOG_LEVEL=info
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - homt-vpn-network
+    command: npm run scheduler
+
+networks:
+  homt-vpn-network:
+    driver: bridge
+
